@@ -1,0 +1,73 @@
+# Foliensatz 1
+Alle Begriffe der diskreten Mathematik werden aus _Menge_ oder _Abbildung_ abgeleitet. Wie 
+* Nummerierung
+* Ordnung
+* Graph
+* etc.
+Die Kernaufgabe ist das Schaffen von präzisen Grundlagen, sprich exakten Definitionen. 
+## Syllogismen
+Logisches Schließen wurde in ETI durch Syllogismen motiviert. Wobei nicht die Wahrheit der Prämissen, oder der Konklusion, sondern die _Wahheit der Schlussfigur entscheidend_ ist. 
+### Bsp.:
+> Der Mond besteht aus grünem Käse			_falsche Aussage_  
+> Die Sonne geht im Westen auf				_falsche Aussage_  
+> Tirol liegt im Flachland						_falsche Aussage_  
+Auch wenn alle Aussagen falsch sind, ist die Schlussfigur trotzdem wahr (_aus falsch folgt Beliebiges_). 
+### Beispiel
+> Tirol ist Bergig								_richtige Aussage_  
+> Die Sonne geht im Osten auf				_richtige Aussage_  
+> Also, besteht der Mond aus grünem Käse		_falsche Aussage_  
+Die Schlussfigur ist falsch (_aus Wahr wird etwas Falsches gefolgert_).
+## Modus Ponens
+### Definition
+> Wenn A, dann B		  
+> A gilt  
+> Also, gilt B  
+### Beispiel
+> Wenn das Kind schreit, hat es Hunger		  
+> Das Kind schreit  
+> Also, hat das Kind Hunger  
+Die Korrektheit dieser Schlussfigur ist unabhängig von den konkreten Aussagen.
+## Wozu Beweise?
+* Überzeugen, dass richtig überlegt wurde; Laut Kurt Gödel bedeutet _beweisen_ nichts anderes als richtig denken.
+* Logisches Denken wird trainiert -> überflüssige Voraussetzungen und falsche Argumente werden schneller erkannt.
+* Beweise führen oft zu programmierbaren Verfahren.
+* In sicherheitskritischen Anwendungen (_Auto, Flugzeug, Medizin_) ist es unabdingbar, bestimmte Eigenschaften von Programmen formal zu verifizieren (_Leben könnten gefährdet werden_).
+### Definitionen von Beweisformen
+Beweisformen sind etwa (i) deduktive Beweise (ii) Beweise von Mengeninklusionen (iii) Kontraposition (iv) indirekte Beweise (v) induktive Beweise (vi) Gegenbeispiele
+## Deduktive Beweise
+### Definition
+* Ein deduktiver Beweis besteht aus einer Folge von Aussagen, die von eine Hypothese zu einer Konklusion führen.
+* Jeder Beweisschritt muss sich (nach akzeptierten logischen Regeln) aus den gegebenen Fakten oder aus vorangegangenen Aussagen ergeben.
+* Folge der Beweisschritte von einer Hypothese _H_ zu einer Konklusion _K_: _Wenn H, dann K._
+Gelegentlich gibt es Aussagen der Form _F genau dann wenn G_. Diese Aussagen zeigt man, in dem _Wenn F, dann G._ und _Wenn G, dann F._ bewiesen wird. 
+#### Alternative Formulierungen sind:
+* F dann und nur dann, wenn G.
+* F ist äquivalent zu G.
+* F ↔ G.
+### Beispiel
+Sei n eine natürliche Zahl. Dann gilt: _n ist gerade gdw. n + 1 ist ungerade_. (_siehe Anhang_)
+## Mengeninklusionen
+### Definition
+Seien A und B Mengen. Um die Teilmengeneigenschaft (Inklusion) A ⊆ B zu zeigen, genügt es _Wenn x ∈ A, dann x ∈ B_ zu beweisen.
+Die Gleichheit von Mengen kann bewiesen werden, indem man zwei Behauptungen zeigt:
+1. Wenn x ∈ A, dann x ∈ B.
+2. Wenn x ∈ B, dann x ∈ A.
+## Kontraposition
+### Definition
+Die Aussage _Wenn H, dann K._ und ihre Kontraposition _Wenn (nicht K), dann (nicht H)._ sind äquivalent.
+### Beispiel
+Die Kontraposition von _es regnet -> die Straße ist nass_ ist _die Straße ist trocken -> es regnet nicht_.
+## Indirekte Beweise bzw. Widerspruchsbeweise
+### Definition
+* Um zu zeigen, dass eine Aussage A gilt, nehmen Widerspruchsbeweise an, dass die Negationen von A gilt. 
+* Wenn aus dieser Annahme ein Widerspruch abgeleitet werden kann, muss die Annahme selbst falsch sein und somit A gelten.
+### Beispiel
+Die Aussage _Es gibt unendliche viele natürliche Zahlen._ ist wahr. Um dies zu zeigen, nehmen wir die Negation des Satzes an: _Es gibt nur endlich viele natürliche Zahlen._ (_siehe Anhang_)
+## Widerlegung durch ein Gegenbeispiel
+### Definition
+* Es genügt ein Gegenbeispiel zu einer allgemeinen Aussage zu finden, um den Satz zu widerlegen.
+* Gegenbeispiele können dazu verwendet werden, um allgemein gefasste Aussagen so weit einzuschränken, dass sie dann als Satz gezeigt werden.
+### Beispiel
+_Für alle natürlichen Zahlen n gilt: n² ≥ 2n._ (_siehe Anhang_)
+<a href='Foliensatz%201/Scan%207%20Mar%202017,%202.35%20PM.pdf'>Scan%207%20Mar%202017,%202.35%20PM.pdf</a>
+#diskrete Mathematik/Zusammenfassungen#
