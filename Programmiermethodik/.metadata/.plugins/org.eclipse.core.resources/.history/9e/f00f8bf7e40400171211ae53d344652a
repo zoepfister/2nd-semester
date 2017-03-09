@@ -1,0 +1,12 @@
+public class MyFirstProgram {
+	public static void main(String[] args) {
+		System.out.println("Hello World");
+
+		int x, y, z;
+		x = 2;
+		y = 3;
+		z = x * y;
+		System.out.println("Result: x*y = " + z + " where x: " + x + 
+		" and y: " + y);
+	}
+}

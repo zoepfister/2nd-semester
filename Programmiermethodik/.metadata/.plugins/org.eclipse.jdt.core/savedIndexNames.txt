@@ -1,0 +1,4 @@
+INDEX VERSION 1.129+/Volumes/Macintosh–HHD/GitHub Programming/2nd-semester/Programmiermethodik/.metadata/.plugins/org.eclipse.jdt.core
+3889107254.index
+820019804.index
+3289243378.index
