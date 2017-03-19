@@ -1,0 +1,21 @@
+
+public class Excercise1B {
+	public static void main(String[] args) {
+		int x = 0;
+		int y = 3;
+		
+		x=++x;
+		System.out.println("x: "+x+" y: "+y);
+		y+=7%y+ ++x;
+		System.out.println("x: "+x+" y: "+y);
+		x/=y;
+		System.out.println("x: "+x+" y: "+y);
+		x+=(double)x/(2*y++);
+		System.out.println("x: "+x+" y: "+y);
+		y=(x==y--?10:20);
+		System.out.println("x: "+x+" y: "+y);
+	y*=((x*y)==--y?50:60);
+	System.out.println("x: "+x+" y: "+y);
+	y-=(x<--y?10:20);System.out.println("x: "+x+" y: "+y);
+	}
+}
