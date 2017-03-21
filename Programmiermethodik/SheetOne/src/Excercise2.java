@@ -46,7 +46,7 @@ public class Excercise2 {
 		// Prints original cart and discounted cart
 		System.out.println("Price of the original cart: " + originalPrice);
 		System.out.println("Price of the discounted cart: " + roundedDiscountedShoppingCart);
-		System.out.println("Number of items in cart: " + numberOfItems);
+		// System.out.println("Number of items in cart: " + numberOfItems);
 
 	} // end main
 
