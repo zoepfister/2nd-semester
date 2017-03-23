@@ -7,12 +7,12 @@ public class Excercise2 {
 		// list of product prices in shopping cart as a Java array
 
 		// shopping cart 1
-		// double[] originalShoppingCart = new double[] { 40.95, 10.80, 2.35,
-		// 22.50, 13.45, 5.95, 33, 41.10, 7.80, 5 };
+		double[] originalShoppingCart = new double[] { 40.95, 10.80, 2.35, 22.50, 13.45, 5.95, 33, 41.10, 7.80, 5 };
 
 		// shopping cart 2
-		double[] originalShoppingCart = new double[] { 40.95, 10.80, 2.35, 22.50, 13.45, 5.95, 33, 41.10, 7.80, 5, 1.25,
-				10.40, 6.10, 14.40, 55.55 };
+		// double[] originalShoppingCart = new double[] { 40.95, 10.80, 2.35,
+		// 22.50, 13.45, 5.95, 33, 41.10, 7.80, 5, 1.25,
+		// 10.40, 6.10, 14.40, 55.55 };
 
 		// shopping cart 3
 		// double[] originalShoppingCart = new double[] { 40.95, 10.80, 2.35,

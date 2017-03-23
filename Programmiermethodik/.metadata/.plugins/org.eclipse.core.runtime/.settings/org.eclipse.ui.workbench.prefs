@@ -5,6 +5,7 @@ PLUGINS_NOT_ACTIVATED_ON_STARTUP=org.eclipse.m2e.discovery;
 SAVE_AUTOMATICALLY=true
 SAVE_AUTOMATICALLY_INTERVAL=100
 eclipse.preferences.version=1
+findBugsEclipsePlugin.consoleFont=1|Source Code Pro|14.0|0|COCOA|1|;
 org.eclipse.compare.contentmergeviewer.TextMergeViewer=1|Source Code Pro|14.0|0|COCOA|1|;
 org.eclipse.debug.ui.DetailPaneFont=1|Source Code Pro|14.0|0|COCOA|1|;
 org.eclipse.debug.ui.MemoryViewTableFont=1|Source Code Pro|14.0|0|COCOA|1|;

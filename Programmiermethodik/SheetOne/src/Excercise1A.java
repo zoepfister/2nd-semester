@@ -15,6 +15,8 @@ class Excercise1A {
 		// returns (double) 2.090909090909091
 		double number2 = (double) 23 / 11;
 		System.out.println(number2);
+		// Either .0, f on one of them
+		// System.out.println((double) (23 / 11));
 
 		// prints 30.0 (floating number)
 		System.out.println(30f);
@@ -26,9 +28,10 @@ class Excercise1A {
 		// '' is not allowed in a print statement (works with ""). '' only works
 		// for single chars
 		// Prints "Luck=Coffee+chocolate2" if corrected
+		// System.out.println("Luck=Coffee+" + 'chocolate' + 2);
 		System.out.println("Luck=Coffee+" + "chocolate" + 2);
 
-		// % binds stronger than ==, >, and &&.
+		// % binds stronger than ==, >l and &&.
 		// First % and >, then ==, then &&
 		// returns false
 		System.out.println((1 == (18 % 4) && (7 > 4)));
@@ -38,8 +41,9 @@ class Excercise1A {
 		System.out.println(8 / 5 % 3);
 
 		// there is no overflow in java -> maxInteger + 1 = minInteger
-		// Explicit cast to short (–2^15 to 2^15 – 1), minInteger out of
-		// bounce -> defaults to 0 apparently
+		// Explicit cast to short (–2^15 to 2^15 – 1)
+		// Binary: 01111111111...1 (32 Bit)
+		// 1111111..1 (16 Bit) +1 -> 0
 		System.out.println((short) Integer.MAX_VALUE + 1);
 
 		// The d probably is for 64 bit float, the number behind e
