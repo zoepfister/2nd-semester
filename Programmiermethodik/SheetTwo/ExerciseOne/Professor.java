@@ -5,7 +5,7 @@ public class Professor {
 
     String firstName;
     String lastName;
-    double jearlyRevenue;
+    double yearlyRevenue;
 
     public String getFirstName() {
         return firstName;
@@ -23,12 +23,12 @@ public class Professor {
         this.lastName = lastName;
     }
 
-    public double getJearlyRevenue() {
-        return jearlyRevenue;
+    public double getYearlyRevenue() {
+        return yearlyRevenue;
     }
 
-    public void setJearlyRevenue(double jearlyRevenue) {
-        this.jearlyRevenue = jearlyRevenue;
+    public void setYearlyRevenue(double yearlyRevenue) {
+        this.yearlyRevenue = yearlyRevenue;
     }
 
     /**
@@ -41,10 +41,10 @@ public class Professor {
     }
 
     // Full constructor
-    public Professor(String firstName, String lastName, double jearlyRevenue) {
+    public Professor(String firstName, String lastName, double yearlyRevenue) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.jearlyRevenue = jearlyRevenue;
+        this.yearlyRevenue = yearlyRevenue;
     }
 
     public void printName() {
@@ -52,7 +52,7 @@ public class Professor {
     }
 
     public double calculateRevenueOfMonth(int month) {
-        double monthlyRevenue = this.jearlyRevenue / 14;
+        double monthlyRevenue = this.yearlyRevenue / 14;
         monthlyRevenue = Math.round(monthlyRevenue * 100.0) / 100.0;
         if ((month == 3) || (month == 6) || (month == 9) || (month == 12)) {
             // if 1.5-Month, then return 1.5*monthlyRevenue (rounded to 2 Decimals for readability)
@@ -64,5 +64,25 @@ public class Professor {
 
     }
 
+    public static void main(String[] args) {
+
+        Professor professor1 = new Professor("Erika", "Akire", 1500);
+        Professor professor2 = new Professor();
+
+        professor2.setFirstName("Max");
+        professor2.setLastName("Milkman");
+        professor2.setYearlyRevenue(1300);
+
+        double revenueOfMonth = professor1.calculateRevenueOfMonth(2);
+
+        professor2.printName();
+        // System.out.println(professor2.firstName + " " + professor2.lastName);
+        System.out.println(String.format("%1$,.2f", professor2.calculateRevenueOfMonth(12)));
+
+
+        // We need this for special cases like 1000
+        System.out.println(String.format("%1$,.2f", revenueOfMonth));
+
+    }
 
 }
