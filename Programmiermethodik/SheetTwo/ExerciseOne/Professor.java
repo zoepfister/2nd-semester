@@ -28,6 +28,9 @@ public class Professor {
     }
 
     public void setYearlyRevenue(double yearlyRevenue) {
+        if (this.yearlyRevenue <= 0.0) {
+            System.err.println("Error! Is your revenue really that low? It's 0.0 now anyways.");
+        }
         this.yearlyRevenue = yearlyRevenue;
     }
 
@@ -57,7 +60,7 @@ public class Professor {
         if ((month == 3) || (month == 6) || (month == 9) || (month == 12)) {
             // if 1.5-Month, then return 1.5*monthlyRevenue (rounded to 2 Decimals for readability)
             // TODO: create better double formatting (maybe return string...)
-            return monthlyRevenue * 1.5;
+            return monthlyRevenue * 1.5f;
         } else {
             return monthlyRevenue;
         }

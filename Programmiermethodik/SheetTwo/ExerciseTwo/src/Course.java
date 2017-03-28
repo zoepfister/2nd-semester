@@ -8,6 +8,7 @@ public class Course {
 
     int id;
     int maxStudents;
+    // List object, doesn't say how it's implemented
     List<Student> students = new ArrayList<>();
     String courseName;
 
@@ -90,7 +91,8 @@ public class Course {
 
     public void printStudents() {
         if (getStudentAmount() > 0) {
-            for (Student student : this.students) {
+            // this. is not necessary here
+            for (Student student : students) {
                 System.out.println(this.students.indexOf(student) + ": " + this.courseName + " - " + student.getId() + " - " + student.getFirstName() + " " + student.getLastName());
             }
         } else {
