@@ -1,5 +1,6 @@
 #!/bin/bash
-# Script 2
+# my_backup_up.sh
+# Clemens Pfister, Github: https://git.io/vyAS3
 #
 
 if (( $# != 1 ))	# if number of arguments is smaller three..
@@ -42,7 +43,7 @@ do
 			# and is NOT the backup directory
 			if [[ "$file" != $@ ]]; then
 				# add the file
-				cp -R "$file" "$@"
+				cp -R "$file" "$@" # use preserve=all to copy with timestamps
 				printf "'$file' has been added to $@.\n"
 			fi
 		fi

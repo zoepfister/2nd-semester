@@ -8,7 +8,8 @@ exit 1
 elif (( $# > 3 ))	# ..or greater than three 
 then 
 printf "%b" "Error. Too many arguments.\n" >&2
-printf "%b" "usage: myscript file1 op file2\n" >&2
+printf "%b" "usage: myscript file1 op file2\n" >&2 # redirect output to stderror output
+												# ">" is redirection 
 exit 2	# print error and usage tips
 else	# if number of arguments is three, print
 printf "%b" "Argument count correct. Proceeding...\n"
