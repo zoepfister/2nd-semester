@@ -5,9 +5,13 @@
 #include <assert.h>
 #include <stdbool.h>
 
+/*==================================
+=            Structures            =
+==================================*/
+
 struct btree {
 	struct btree_node *root;
-	int count;
+	int size;
 };
 
 struct btree_node {
@@ -16,9 +20,99 @@ struct btree_node {
 	struct btree_node *left;
 };
 
-static btree_node* getNode(btree* t) {
-	return t->root;
+/*=====  End of Structures  ======*/
+
+int main(void) {
+//	int x = -3;
+//
+//	btree *tree = btree_create();
+//	btree_insert(tree, 4);
+//	btree_insert(tree, 7);
+//	btree_insert(tree, 3);
+//	btree_remove(tree, 4);
+//	btree_insert(tree, 2);
+//	btree_insert(tree, -3);
+//	btree_insert(tree, 6);
+//	btree_insert(tree, 9);
+//	btree_insert(tree, 11);
+//	btree_remove(tree, 2);
+//	btree_remove(tree, 12);
+//	btree_remove(tree, 4);
+//	btree_remove(tree, 10);
+//
+//	printf("Contains %d: %s\n", x, btree_contains(tree, x) ? "true" : "false");
+//	printf("Root: %d\n", tree->root->value);
+//	printf("Minimum: %d\n", btree_minimum(tree));
+//	printf("Maximum: %d\n", btree_maximum(tree));
+//	btree_print(tree, stdout);
+//	btree_destroy(tree);
+
+// btree-test.c main
+
+	btree *ta = btree_create();
+
+	assert(btree_size(ta) == 0);
+	assert(btree_contains(ta, 4) == false);
+	btree_print(ta, stdout);
+
+	btree_insert(ta, 4);
+	btree_insert(ta, 7);
+	btree_insert(ta, 3);
+
+	assert(btree_size(ta) == 3);
+	assert(btree_contains(ta, 4) == true);
+	assert(btree_minimum(ta) == 3);
+	assert(btree_maximum(ta) == 7);
+	btree_print(ta, stdout);
+
+	btree_remove(ta, 4);
+
+	assert(btree_size(ta) == 2);
+	assert(btree_contains(ta, 4) == false);
+	assert(btree_minimum(ta) == 3);
+	assert(btree_maximum(ta) == 7);
+	btree_print(ta, stdout);
+
+	btree_insert(ta, 2);
+	btree_insert(ta, -3);
+	btree_insert(ta, 6);
+	btree_insert(ta, 9);
+
+	assert(btree_size(ta) == 6);
+	btree_print(ta, stdout);
+
+	btree_remove(ta, 6);
+
+	assert(btree_size(ta) == 5);
+	assert(btree_contains(ta, 6) == false);
+	btree_print(ta, stdout);
+
+	btree_insert(ta, 5);
+	btree_insert(ta, 5);
+
+	assert(btree_size(ta) == 6);
+	assert(btree_contains(ta, 5) == true);
+	btree_print(ta, stdout);
+
+	btree_insert(ta, 6);
+	btree_insert(ta, 4);
+	btree_remove(ta, 7);
+	btree_remove(ta, 7);
+
+	assert(btree_size(ta) == 7);
+	assert(btree_contains(ta, 7) == false);
+	btree_print(ta, stdout);
+
+	btree_destroy(ta);
+
+	return EXIT_SUCCESS;
 }
+
+/*=================================
+=            Functions            =
+=================================*/
+
+/*----------  Static functions  ----------*/
 
 static btree_node* create_node(int d) {
 	btree_node *new_node = malloc(sizeof(struct btree_node));
@@ -33,44 +127,12 @@ static btree_node* create_node(int d) {
 	return new_node;
 }
 
-static void raiseCounter(btree* t) {
-	t->count += 1;
+static void increase_counter(btree* t) {
+	t->size += 1;
 }
 
-int main(void) {
-	int x = 12;
-
-	btree *tree = btree_create();
-	btree_insert(tree, 4);
-	btree_insert(tree, 7);
-	btree_insert(tree, 3);
-	btree_remove(tree, 4);
-	btree_insert(tree, 2);
-	btree_insert(tree, -3);
-	btree_insert(tree, 6);
-	btree_insert(tree, 9);
-//	btree_insert(tree, 11);
-//	btree_remove(tree, 2);
-//	btree_remove(tree, 12);
-//	btree_remove(tree, 4);
-//	btree_remove(tree, 10);
-
-	printf("Contains %d: %s\n", x, btree_contains(tree, x) ? "true" : "false");
-	printf("Root: %d\n", tree->root->value);
-	printf("Minimum: %d\n", btree_minimum(tree));
-	printf("Maximum: %d\n", btree_maximum(tree));
-	btree_print(tree, stdout);
-	btree_destroy(tree);
-	return EXIT_SUCCESS;
-}
-
-btree* btree_create() {
-	// create an empty root node
-	btree *tree = malloc(sizeof(struct btree));
-	// default value of 0
-	tree->root = NULL;
-	tree->count = 1;
-	return tree;
+static void decrease_counter(btree* t){
+	t->size -= 1;
 }
 
 static void delete_tree(btree_node* root) {
@@ -82,10 +144,46 @@ static void delete_tree(btree_node* root) {
 	}
 }
 
+// FIXME: This print does not do what it is supposed to do...
+static void print_tree(btree_node* cursor, const btree* t) {
+	if (cursor != NULL) {
+
+		print_tree(cursor->left, t);
+
+
+		if ((cursor->left != NULL) && (cursor->right != NULL)) {
+			printf("%d, ", cursor->value);
+		} else {
+			if (cursor->left == NULL) {
+				printf("(");
+			}
+
+			printf("%d", cursor->value);
+
+			if ((cursor->right == NULL) && (cursor->value != btree_maximum(t))) {
+				printf("), ");
+			}
+		}
+
+		print_tree(cursor->right, t);
+	}
+}
+
+/*----------  Header functions  ----------*/
+
+btree* btree_create() {
+	// create an empty root node
+	btree *tree = malloc(sizeof(struct btree));
+	// default value of 0
+	tree->root = NULL;
+	tree->size = 0;
+	return tree;
+}
+
 void btree_destroy(btree* t) {
 	// Using static function above, which makes more
 	// sense to me.
-	delete_tree(getNode(t));
+	delete_tree(t->root);
 }
 
 /// Returns the smallest number in tree 't'
@@ -113,11 +211,15 @@ void btree_insert(btree* t, int d) {
 	if (t->root == NULL) {
 		btree_node* root = create_node(d);
 		t->root = root;
-		raiseCounter(t);
+	} else if (btree_contains(t, d)) {
+		// if this value is already in the tree 
+		// return without doing anything
+		return;
+		
 	} else {
 
 		bool is_left = false;
-		btree_node* cursor = getNode(t);
+		btree_node* cursor = t->root;
 		btree_node* previouse_node = NULL;
 
 		while (cursor != NULL) {
@@ -135,13 +237,17 @@ void btree_insert(btree* t, int d) {
 		} else {
 			previouse_node->right = create_node(d);
 		}
-		raiseCounter(t);
 	}
+	increase_counter(t);
 }
 
 bool btree_contains(const btree* t, int d) {
 	btree_node* root = t->root;
-
+	
+	if (root == NULL) {
+		return false;
+	}
+	
 	// in case root is desired value
 	if (root->value == d) {
 		return true;
@@ -179,32 +285,8 @@ bool btree_contains(const btree* t, int d) {
 
 }
 
-static void print_tree(btree_node* cursor, const btree* t) {
-	if (cursor != NULL) {
-
-		print_tree(cursor->left, t);
-
-
-		if ((cursor->left != NULL) && (cursor->right != NULL)) {
-			printf("%d, ", cursor->value);
-		} else {
-			if (cursor->left == NULL) {
-				printf("(");
-			}
-
-			printf("%d", cursor->value);
-
-			if ((cursor->right == NULL) && (cursor->value != btree_maximum(t))) {
-				printf("), ");
-			}
-		}
-
-		print_tree(cursor->right, t);
-	}
-}
-
 void btree_print(const btree* t, FILE* out) {
-	if (t == NULL) {
+	if (t->root == NULL) {
 		printf("( NIL ) : 0\n");
 		return;
 	}
@@ -212,8 +294,11 @@ void btree_print(const btree* t, FILE* out) {
 	btree_node* cursor = t->root;
 	printf("(");
 	print_tree(cursor, t);
-	printf(") : %d\n", t->count);
-	//printf(") : %d\n", t->count);
+	printf(") : %zu\n", btree_size(t));
+}
+
+size_t btree_size(const btree* t) {
+	return t->size;
 }
 
 
@@ -227,6 +312,8 @@ void btree_remove(btree* t, int d) {
 		printf("This data does not exist in this tree!\n");
 		return;
 	}
+
+	decrease_counter(t);
 
 	btree_node* root = t->root;
 	btree_node* previous = NULL;
@@ -348,10 +435,7 @@ void btree_remove(btree* t, int d) {
 		}
 
 	}
-
+	
 }
 
-
-
-
-
+/*=====  End of Functions  ======*/
