@@ -81,7 +81,7 @@ public class Professor {
         }
 
         // Professor class has no id -> don't need to check that
-        return true;
+        return false;
     }
 
     @Override
