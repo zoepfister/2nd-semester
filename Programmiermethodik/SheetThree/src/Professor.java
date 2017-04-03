@@ -31,6 +31,7 @@ public class Professor {
         isTeaching = true;
     }
 
+    // Getter / Setter
     public double getCurrentSalary() {
         return currentSalary;
     }
@@ -55,13 +56,13 @@ public class Professor {
 
     public void raisePayout(int parameter) {
         currentSalary = (100 * currentSalary) / parameter;
-        // If currentSalary is bigger then maxSalary, set to current, else do nothing
-        maxSalary = currentSalary > maxSalary ? currentSalary : maxSalary;
+        // If currentSalary is bigger then maxSalary, set the currentSalary to maxSalary, else do nothing
+        currentSalary = currentSalary > maxSalary ? maxSalary : currentSalary;
     }
 
     public void raisePayout(double parameter) {
         currentSalary = (100 * currentSalary) / parameter;
-        maxSalary = currentSalary > maxSalary ? currentSalary : maxSalary;
+        currentSalary = currentSalary > maxSalary ? maxSalary : currentSalary;
     }
 
     // Shameless copy of student equals method

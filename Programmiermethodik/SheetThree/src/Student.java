@@ -6,6 +6,7 @@ public class Student {
     String firstname;
     String lastname;
 
+    // Constructors
     public Student(int studentId, String firstname, String lastname) {
         this.studentId = studentId;
         this.firstname = firstname;
@@ -16,6 +17,7 @@ public class Student {
         this.studentId = studentId;
     }
 
+    // Getter / Setter
     public int getStudentId() {
         return studentId;
     }

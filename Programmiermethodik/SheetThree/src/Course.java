@@ -16,6 +16,7 @@ public class Course {
     Professor professor;
     boolean roomIsFull;
 
+    // Constructors
     public Course(int courseId, Room room) {
         this.courseId = courseId;
         this.room = room;
@@ -27,6 +28,7 @@ public class Course {
         this.professor = professor;
     }
 
+    // Getter
     public Professor getProfessor() {
         return professor;
     }
