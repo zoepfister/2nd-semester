@@ -194,7 +194,7 @@ void btree_print(const btree* t, FILE* out) {
 
 btree* btree_create() {
 	// create an empty root node
-	btree* tree = malloc(sizeof(struct btree*));
+	btree *tree = malloc(sizeof(struct btree));
 	// default value of 0
 	tree->root = NULL;
 	tree->size = 0;
@@ -205,7 +205,6 @@ void btree_destroy(btree* t) {
 	// Using static function above, which makes more
 	// sense to me.
 	delete_tree(t->root);
-	free(t);
 }
 
 /// Returns the smallest number in tree 't'
@@ -230,12 +229,6 @@ int btree_maximum(const btree* t) {
 }
 
 void btree_insert(btree* t, int d) {
-	
-	if (t == NULL) {
-		printf("Create a tree first!\n");
-		return;
-	}
-	
 	if (t->root == NULL) {
 		btree_node* root = create_node(d);
 		t->root = root;
