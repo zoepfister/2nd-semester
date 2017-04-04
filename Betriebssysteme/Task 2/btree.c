@@ -80,9 +80,7 @@ int main(void) {
 
 	assert(btree_size(ta) == 6);
 	btree_print(ta, stdout);
-
 	btree_remove(ta, 6);
-
 	assert(btree_size(ta) == 5);
 	assert(btree_contains(ta, 6) == false);
 	btree_print(ta, stdout);
@@ -145,31 +143,47 @@ static void delete_tree(btree_node* root) {
 }
 
 // FIXME: This print does not do what it is supposed to do...
-static void print_tree(btree_node* cursor, const btree* t) {
+static void print_tree(btree_node* cursor, int max_value, int min_value) {
 	if (cursor != NULL) {
+	
+	if (cursor->value == min_value){
+		printf("(");
+	}
+	
+	print_tree(cursor->left, max_value, min_value);
 
-		print_tree(cursor->left, t);
-
-
-		if ((cursor->left != NULL) && (cursor->right != NULL)) {
-			printf("%d, ", cursor->value);
-		} else {
-			if (cursor->left == NULL) {
-				printf("(");
-			}
-
-			printf("%d", cursor->value);
-
-			if ((cursor->right == NULL) && (cursor->value != btree_maximum(t))) {
-				printf("), ");
-			}
-		}
-
-		print_tree(cursor->right, t);
+	if (cursor->left == NULL && cursor->right == NULL) {
+		printf("(%d)", cursor->value);
+	} else if (cursor->left != NULL && cursor->right != NULL) {
+		printf(", %d, ", cursor->value);
+	} else if (cursor->right == NULL) {
+		printf(", %d)", cursor->value);
+	} else if (cursor->left == NULL) {
+		printf(", (%d", cursor->value);
+	}
+//		printf("%d ", cursor->value);
+	print_tree(cursor->right, max_value, min_value);
+	
+	if (cursor->value == max_value){
+		printf(")");
+	}
+	
 	}
 }
 
 /*----------  Header functions  ----------*/
+
+void btree_print(const btree* t, FILE* out) {
+	if (t->root == NULL) {
+		printf("( NIL ) : 0\n");
+		return;
+	}
+	out = stdout;
+	btree_node* cursor = t->root;
+	
+	print_tree(cursor, btree_maximum(t), btree_minimum(t));
+	printf(" : %zu\n", btree_size(t));
+}
 
 btree* btree_create() {
 	// create an empty root node
@@ -285,17 +299,6 @@ bool btree_contains(const btree* t, int d) {
 
 }
 
-void btree_print(const btree* t, FILE* out) {
-	if (t->root == NULL) {
-		printf("( NIL ) : 0\n");
-		return;
-	}
-	out = stdout;
-	btree_node* cursor = t->root;
-	printf("(");
-	print_tree(cursor, t);
-	printf(") : %zu\n", btree_size(t));
-}
 
 size_t btree_size(const btree* t) {
 	return t->size;
