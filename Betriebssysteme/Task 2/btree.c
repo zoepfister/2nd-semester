@@ -36,10 +36,10 @@ int main(void) {
 //	btree_insert(tree, 9);
 //	btree_insert(tree, 11);
 //	btree_remove(tree, 2);
-//	btree_remove(tree, 12);
+//	btree_remove(tree, 4);
 //	btree_remove(tree, 4);
 //	btree_remove(tree, 10);
-//
+
 //	printf("Contains %d: %s\n", x, btree_contains(tree, x) ? "true" : "false");
 //	printf("Root: %d\n", tree->root->value);
 //	printf("Minimum: %d\n", btree_minimum(tree));
@@ -118,10 +118,12 @@ static btree_node* create_node(int d) {
 		printf("There has been a allocation error!");
 		exit(EXIT_FAILURE);
 	}
-
+	
+	// Set defaults for new node
 	new_node->value = d;
 	new_node->left = NULL;
 	new_node->right = NULL;
+	
 	return new_node;
 }
 
@@ -178,11 +180,16 @@ void btree_print(const btree* t, FILE* out) {
 		printf("( NIL ) : 0\n");
 		return;
 	}
-	out = stdout;
-	btree_node* cursor = t->root;
+
 	
-	print_tree(cursor, btree_maximum(t), btree_minimum(t));
-	printf(" : %zu\n", btree_size(t));
+	if (out == stderr){
+		printf("There has been an error!");
+		return;
+	} else {
+		btree_node* cursor = t->root;	
+		print_tree(cursor, btree_maximum(t), btree_minimum(t));
+		printf(" : %zu\n", btree_size(t));		
+	}
 }
 
 btree* btree_create() {
@@ -288,19 +295,18 @@ bool btree_contains(const btree* t, int d) {
 				return false;
 			}
 		}
-
+		
 		if (cursor->value == d) {
 			return true;
 		}
-
 	}
 
 	return false;
-
 }
 
 
 size_t btree_size(const btree* t) {
+	// Such constant
 	return t->size;
 }
 
@@ -317,26 +323,32 @@ void btree_remove(btree* t, int d) {
 	}
 
 	decrease_counter(t);
-
+	
+	// helper variables 
 	btree_node* root = t->root;
 	btree_node* previous = NULL;
 	btree_node* next_left = NULL;
 	btree_node* next_right = NULL;
 	btree_node* cursor = root;
-
-	// if the root get's deleted
+	
+	// There are two large cases:
+		
+	// 1) root get's deleted
 	if (root->value == d) {
+		
+		// We will free previous_root later on
 		btree_node* previous_root = t->root;
 
+		// helper
 		next_left = t->root->left;
 		next_right = t->root->right;
 
-		// in case there are values on both sides,
-		// I pull up the right side
+		// a) In case there are nodes on both sides,
+		// I pull up the right node to be the root
 		if ((next_right != NULL) && (next_left != NULL)) {
-			// change the root to the next on the ride and
+			
+			// change the root to the next on the right and
 			// create a cursor
-
 			t->root = next_right;
 			cursor = t->root;
 
@@ -344,27 +356,20 @@ void btree_remove(btree* t, int d) {
 			while (cursor->left != NULL) {
 				cursor = cursor->left;
 			}
-			// and set the next smallest element of the roots
-			// smallest element to the previous roots left element.
+			// and connect the next smallest element to the elements on 
+			// the left side on the tree
 			// (next left still has the info of the old root left)
 			cursor->left = next_left;
+			
+		// b) if there is no right tree branch
 		} else if (next_right == NULL) {
+			// set the root to the next node on the left
 			t->root = next_left;
-			cursor = t->root;
-
-			while (cursor->right != NULL) {
-				cursor = cursor->right;
-			}
-			cursor->right = next_right;
-
+			
+		// c) if there is no left tree breanch
 		} else if (next_left == NULL) {
 			t->root = next_right;
-			cursor = t->root;
-
-			while (cursor->left != NULL) {
-				cursor = cursor->left;
-			}
-			cursor->left = next_left;
+		// d) root is the only one
 		} else {
 			free(t->root);
 		}
@@ -373,20 +378,15 @@ void btree_remove(btree* t, int d) {
 		return;
 	}
 
-	// For the other cases
+	// 2) For the other cases
 	// copied from btree_contains
 	while (true) {
 		// remember the previous node to delete next node later
 		previous = cursor;
 
-
-		// if the value is greater, check if the next to right is NULL,
-		// if not, go further to the right
 		if (d > cursor->value) {
 			cursor = cursor->right;
 
-			// Explicitly writing else if for readability
-			// Same as above with left
 		} else if (d < cursor->value) {
 			cursor = cursor->left;
 		}
@@ -394,37 +394,44 @@ void btree_remove(btree* t, int d) {
 		next_left = cursor->left;
 		next_right = cursor->right;
 
+		// Found the node we're looking for
 		if (cursor->value == d) {
 			// If there is no more element after cursor
-			if ((cursor->left == NULL) && (cursor->right == NULL)) {
+			if ((next_left == NULL) && (next_right == NULL)) {
 				free(cursor);
 				if (d > previous->value) {
-					// remove reference to next element
+					// remove reference to this element
 					previous->right = NULL;
-
 					// Readability
 				} else if (d < previous->value) {
 					previous->left = NULL;
 				}
 				break;
-				// if there is at least one element after cursor
+				
+				// If there is at least one element after cursor
 			} else {
 				free(cursor);
 
-				// we'll have 3: next_left = NULL; next_right = NULL, both != NULL
-				// both != NULL
+				// we'll have 3 cases: next_left = NULL; next_right = NULL, both != NULL
+				
+				// Node has two childs
 				if ((next_left != NULL) && (next_right != NULL)) {
+					// If value was on right side
 					if (d > previous->value) {
+						// Set the connection from the previous one to next_right,
+						// if the value of the deleted node's next right node if next_left is smaller (draw)
 						previous->right = next_left->value > next_right->value ? next_right : next_left;
 					} else if (d < previous->value) {
 						previous->left = next_left->value > next_right->value ? next_left : next_right;
 					}
+				// Node has right child	
 				} else if (next_left == NULL) {
 					if (d > previous->value) {
 						previous->right = next_right;
 					} else if (d < previous->value) {
 						previous->left = next_right;
 					}
+				// Node has left child
 				} else if (next_right == NULL) {
 					if (d > previous->value) {
 						previous->right = next_left;
