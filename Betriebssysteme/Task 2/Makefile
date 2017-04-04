@@ -15,6 +15,7 @@ clean:
 	$(RM) testvector testvector.o
 
 testvector: testvector.o
+	gcc testvector.o -o testvector $(CFLAGS)
 	
 testvector.o: btree.c btree.h
 	gcc -c btree.c -o testvector.o $(CFLAGS)
