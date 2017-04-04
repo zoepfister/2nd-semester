@@ -1,4 +1,4 @@
-# README
+# README.md – [Github](https://github.com/Buchenherz/2nd-semester/tree/master/Betriebssysteme/Task%202)
 
 ## When would you use a sorted binary tree over a linked list?
 
@@ -63,6 +63,9 @@ To sum up:
 
 - Private structures should go in the .c file, with a declaration in the .h file if they are used by any functions in the .h. Source: [StackOverflow](http://stackoverflow.com/questions/6316987/should-struct-definitions-go-in-h-or-c-file)
 ## Explain the const in the parameter list of btree_print, is it required?
+
+I kinda tricked my way out of this one in my implementation 😉
+
 ## Explain memory leaks. Why are memory leaks bad? You should know how to use valgrind to check your program for memory leaks.
 
 When a program needs to store some temporary information during execution, it can dynamically request a chunk of memory from the system. However, the system has a fixed amount of total memory available. If one application uses up all of the system’s free memory, then other applications will not be able to obtain the memory that they require. This results from *not so bad stuff* like gentle shutdowns or exit of a program to *really bad stuff* like an unexpected crash. [Source](https://msdn.microsoft.com/en-us/library/ms859408.aspx)
@@ -102,6 +105,7 @@ At least that’s what I have in mind while writing comments. When code is self-
 
 ## Why should the module not output debug messages?
 
+I unfortunately don’t know…
 
 ## Why and when should you use assert?
 
