@@ -205,6 +205,7 @@ void btree_destroy(btree* t) {
 	// Using static function above, which makes more
 	// sense to me.
 	delete_tree(t->root);
+	free(t);
 }
 
 /// Returns the smallest number in tree 't'
