@@ -8,7 +8,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c99 -O2
 # doesn't appear to be up-to-date with regards to its dependencies.
 
 .PHONY: all
-all: testvector 
+all: testvector
 
 .PHONY: clean
 clean:
@@ -19,4 +19,3 @@ testvector: testvector.o
 	
 testvector.o: btree.c btree.h
 	gcc -c btree.c -o testvector.o $(CFLAGS)
-

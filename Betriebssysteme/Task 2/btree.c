@@ -19,6 +19,8 @@ struct btree {
 
 struct btree_node {
 	int value;
+	// you could add a *parent here to make a pointer 
+	// based implementation easier
 	struct btree_node *right;
 	struct btree_node *left;
 };
@@ -150,7 +152,8 @@ static void delete_tree(btree_node* root) {
 // FIXME: This print does not do what it is supposed to do...
 static void print_tree(btree_node* cursor, int max_value, int min_value) {
 	if (cursor != NULL) {
-	
+	// Use fprint, change parameters to take FILE* out as a parameter,
+
 	if (cursor->value == min_value){
 		printf("(");
 	}
@@ -316,6 +319,8 @@ size_t btree_size(const btree* t) {
 
 
 void btree_remove(btree* t, int d) {
+	// If we have very large values, we should just change the
+	// pointers to avoid copying.
 	if (t == NULL) {
 		printf("This tree does not exist!\n");
 		return;
