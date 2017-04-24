@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by clemenspfister on 23/03/2017.
@@ -45,7 +44,6 @@ public class Course implements Lecture {
     public List<Student> getStudents() {
         return students;
     }
-
 
     // Constructors
 
