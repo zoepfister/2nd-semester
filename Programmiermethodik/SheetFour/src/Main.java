@@ -9,6 +9,7 @@ public class Main {
         Seminar seminar1 = new Seminar(1, room1, secretary1, 11);
         Employee employee1 = new Professor("Mat", "Hematik", 1000.10);
         Employee professor1 = new Professor("Anna", "Konda", 2312.10);
+        Course course = new Course(1, room1);
 
         Person p1 = new Person("Kamma", "Corder", 12);
         Person p2 = new Person("Corinna", "Cucumber", 21);
@@ -21,7 +22,7 @@ public class Main {
 
         System.out.println(Secretary.minSalary);
 
-        System.out.println(professor1.minSalary);
+        System.out.println(Employee.minSalary);
 
         System.out.println(seminar1.getEmployee());
 
@@ -51,6 +52,9 @@ public class Main {
 
 
         System.out.println(p4.equals(p1));
+
+        course.addTeacher(professor1);
+        course.addTeacher(secretary1);
 
 
     }

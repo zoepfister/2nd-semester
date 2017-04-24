@@ -5,8 +5,8 @@
 // Professor or Secretary
 abstract public class Employee extends Person {
     double salary;
-    protected double minSalary = 500.0;
-    protected double maxSalary = 5000.0;
+    protected static double minSalary = 500.0;
+    protected static double maxSalary = 5000.0;
 
     protected Employee() {
         System.out.println("Created Employee Object!");
