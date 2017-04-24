@@ -49,7 +49,6 @@ public class Course implements Lecture {
 
     // Constructors
 
-    // TODO: Allow multiple additions at once
     public void addStudent(Student student) {
         // Compare student amount with roomCapacity
         if (students.size() >= room.capacity) {
@@ -77,7 +76,7 @@ public class Course implements Lecture {
         }
     }
 
-    private void addTeacher(Employee employee) {
+    public void addTeacher(Employee employee) {
         if (employee instanceof Professor) {
             this.employee = employee;
         } else {
@@ -106,5 +105,6 @@ public class Course implements Lecture {
             System.out.println("There are no students in this course!");
         }
     }
+
 
 }

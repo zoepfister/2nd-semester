@@ -1,40 +1,39 @@
 /**
  * Created by clemenspfister on 06/04/2017.
  */
+// Employee is an abstract form of e.g.
+// Professor or Secretary
 abstract public class Employee extends Person {
-    protected static double salary;
-    protected static double minSalary = 500.0;
-    protected static double maxSalary = 5000.0;
+    double salary;
+    protected double minSalary = 500.0;
+    protected double maxSalary = 5000.0;
 
-    public Employee() {
+    protected Employee() {
         System.out.println("Created Employee Object!");
     }
 
-    public Employee(String firstname, String lastname) {
+    protected Employee(String firstname, String lastname) {
         super(firstname, lastname);
-        // FIXME: How to do static stuff in Java
-        // Hier soll eine lokale Gehalt-Variable auf einen statischen
-        // Minimumgehalt gesetzt werden.
         salary = minSalary;
     }
 
-    public Employee(String firstname, String lastname, double salary) {
+    protected Employee(String firstname, String lastname, double salary) {
         super(firstname, lastname);
-        Employee.salary = salary;
+        this.salary = salary;
     }
 
     // TODO: Rename parameter to something useful
-    public void raisePayOut(double parameter) {
+    protected void raisePayOut(double parameter) {
         if (parameter <= 0) {
             System.err.println("You entered a smaller or equal value than 0 - no changes have been made.");
             return;
         }
-        double tempSalary = ((salary * 100) / parameter);
+        // actual percent increase
+        double tempSalary = salary + ((parameter * salary) / 100);
         // If tempSalary is greater than maxSalary, set salary to maxSalary,
         // tempSalary else.
         salary = tempSalary >= maxSalary ? maxSalary : tempSalary;
 
     }
 
-    // TODO: Set all attributes to protected
 }

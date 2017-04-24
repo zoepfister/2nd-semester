@@ -2,7 +2,6 @@
  * Created by clemenspfister on 31/03/2017.
  */
 public class Professor extends Employee {
-    // For implementing the `get's more when teaching
 
     public Professor() {
         System.out.println("Created a Professor!");
@@ -18,25 +17,6 @@ public class Professor extends Employee {
 
     public double getSalary() {
         return salary;
-    }
-
-    // Shameless copy of student equals method
-    public boolean equals(Professor professor) {
-
-        if (this == professor) {
-            return true;
-        }
-
-        if (professor == null) {
-            return false;
-        }
-
-        if (!(professor instanceof Professor)) {
-            return false;
-        }
-
-        // Professor class has no id -> don't need to check that
-        return false;
     }
 
     @Override

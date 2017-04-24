@@ -2,7 +2,7 @@
  * Created by clemenspfister on 06/04/2017.
  */
 public class Seminar extends Course {
-    // Can't do anything if this is final
+    // Can't do anything if this is final (why would we do this? we need to change it anyways..)
     private static int seminarID = 0;
 
     public Seminar(int courseID, Room room, int seminarID) {
@@ -17,6 +17,16 @@ public class Seminar extends Course {
         Seminar.seminarID = seminarID;
         room.capacity = 30;
     }
+
+
+//    private void addTeacher(Employee employee) {
+//        if (employee instanceof Professor) {
+//            this.employee = employee;
+//        } else {
+//            this.employee = null;
+//        }
+//    }
+
 
     @Override
     public void addStudent(Student student) {
