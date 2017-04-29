@@ -4,75 +4,126 @@
 #include <signal.h>
 #include <unistd.h>
 
+
+// Questions:
+/*
+	- What is the flow of such a program?
+	- How to block signals for a duration of seconds?
+*/
+
 #define CHILDREN_AMOUNT 1
 
-volatile sig_atomic_t print_flag = false;
-
-void sig_handler(int signo)
-{
-	if (signo == SIGUSR1){
-		printf("received SIGUSR1\n");
-	} else if (signo == SIGUSR2) {
-		printf("received SIGUSR2\n");
-	} else if (signo == SIGALRM) {
-		print_flag = true;
+// Here is my signal handler
+void handle_signal(int signal) {
+	// Find out which signal we're handling
+	switch (signal) {
+		case SIGUSR1:
+			printf("Got SIGUSR1, continuing...\n");
+			break;
+		case SIGUSR2:
+			printf("Caught SIGUSR2, exiting now...\n");
+			exit(0);
+		default:
+			fprintf(stderr, "Caught wrong signal: %d\n", signal);
+			return;
 	}
 }
 
+// A seperate handler for sigalrm
+void handle_sigalrm(int signal) {
+	if (signal != SIGALRM) {
+		fprintf(stderr, "Caught wrong signal: %d\n", signal);
+	}
+}
+
+// Function that uses the alarm function to make a func wait.
+void do_sleep(int seconds){
+	struct sigaction sa;
+		sigset_t mask;
+		
+		sa.sa_handler = &handle_sigalrm; // Intercept and ignore SIGALRM
+		sa.sa_flags = SA_RESETHAND; // Remove the handler after first signal
+		sigfillset(&sa.sa_mask);
+		sigaction(SIGALRM, &sa, NULL);
+		
+		// Get the current signal mask
+		sigprocmask(0, NULL, &mask);
+
+		// Unblock SIGALRM
+		sigdelset(&mask, SIGALRM);
+
+		// Wait with this mask
+		alarm(seconds);
+		sigsuspend(&mask);
+}
+
 int main(int argc, char *argv[]) {
-	signal(SIGALRM, sig_handler);
+	
+	// Prepare sigaction
 	struct sigaction sa;
 	
-	sa.sa_handler = &sig_handler;
-	sa.sa_flags = SA_RESTART;
-	
-
 	// pid of parrent process
 	pid_t pid = getpid();
 	printf("Parent PID: %d.\n", pid);
 	
+	// sigaction prep
+	sa.sa_handler = &handle_signal;
+	sigfillset(&sa.sa_mask);
+	
+	// Create a child process with it's on pid
 	pid_t child_pid = fork();
+	
+	// Success check
 	if (child_pid < 0) {
 		printf("Fork error!\n");
 		abort();
 	} else if (child_pid == 0) {
+		
 		pid_t child_pid = getpid();
 		printf(" → Child width PID of %d created!\n", child_pid);
-		for(int i = 3; i == 0; i--){
-			pause();
-			if ((sigaction(SIGUSR1, &sa, NULL)) == -1) {
-				printf("Cannot handle SIGUSR1!\n");
-			}
-		}
-		exit(0);
+
+		// Signal receiver
+		signal(SIGUSR1, handle_signal);
+		signal(SIGUSR2, handle_signal);
+		
+		pause();
+		while(true);
+		
+		// How do you do the above with sigaction()?
+		
+		//			if (sigaction(SIGUSR1, &sa, NULL) < 0) {
+		//				printf("Cannot handle SIGUSR1!\n");
+		//			}
+		//			if (sigaction(SIGUSR2, &sa, NULL) < 0) {
+		//				printf("Cannot handle SIGUSR2!\n");
+		//			}
+		//			printf("Signal recieved!\n");
+		
 	} else {
-	
-	for (int j = 0; j < 5;j++) {
-		// Alarm start
-		alarm(2);
-		while (true){
-			if (print_flag) {
-				print_flag = false;
-				printf("Hello!\n");
-				kill(child_pid, SIGUSR1);
-				kill(child_pid, SIGUSR2);
-				break;
-			}
+		// Parent section
+		sa.sa_handler = SIG_DFL;
+		sigaction(SIGUSR1, &sa, NULL);
+		sigaction(SIGUSR2, &sa, NULL);
 		
-		}
-		// Alarm end
+		// Need to sleep here because otherwise, forloop would run
+		// twice on startup
+		do_sleep(1);
 		
-		
+		for (int j = 0; j < 3;j++) {
+			
+		if (kill(child_pid, SIGUSR1) == 0){
+			printf("Signal SIGUSR1 sent!\n");
+		}		
+		do_sleep(5);
+	}
+	if (kill(child_pid, SIGUSR2) == 0){
+			printf("Signal SIGUSR2 sent!\n");
 	}
 }
-	
-	
-	
-	
-	
-//	wait(NULL);	
-//	printf(" ♦ Child with PID %ld exited with status 0x%x.\n", (long)child_pid, status);
 
+	wait(NULL);	
+	printf(" ♦ Child with PID %d exited.\n", child_pid);
+	printf(" ♦ Parent with PID %d exited.\n", getpid());
 	
 	return EXIT_SUCCESS;
 }
