@@ -19,7 +19,9 @@ int main(int argc, char *argv[]) {
 		exit(0);
 	} else {
 	// wait for process with pid of child_pid to finish
-	waitpid(child_pid, NULL, 0);
+	// (meaning wait for the child whose process ID is equal to the value of pid.)
+	// https://linux.die.net/man/2/waitpid
+	waitpid(child_pid, NULL, 2);
 	printf(" ♦ Child with PID %ld exited.", (long)child_pid);
 	}
 	
