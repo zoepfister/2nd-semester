@@ -25,7 +25,6 @@ struct queue {
 	int front;
 	int tail;
 };
-typedef struct queue queue;
 
 struct btree {
 	struct btree_node *root;
@@ -40,16 +39,6 @@ struct btree_node {
 	struct btree_node *left;
 };
 
-bool stack_has_next(stack *stack);
-int stack_next(stack *stack);
-stack* iterative_preorder(btree* t);
-
-btree_node* dequeue(queue* queue);
-void enqueue(queue *queue, btree_node *node);
-void print_queue(queue* queue);
-queue* iterative_breadth_first(btree* t);
-bool queue_has_next(queue *queue);
-int queue_next(queue *queue);
 
 /*=====  End of Structures  ======*/
 
@@ -79,12 +68,11 @@ int main(void) {
 	print_stack(preorder_iterator);
 	
 	queue *breadth_iterator = iterative_breadth_first(tree);
+	
 	while (breadth_iterator->tail != breadth_iterator->front) {
 		queue_next(breadth_iterator);
 	}
 	
-	
-	btree_print(tree, stdout);
 	free(breadth_iterator);
 	btree_destroy(tree);
 	free(preorder_iterator);
@@ -242,6 +230,7 @@ int stack_next(stack *stack){
 /* -------- queue stuff ------------------*/
 
 void enqueue(queue *queue, btree_node *node){
+	
 	if (queue->front == 0 && queue->tail == 0) {
 		queue->que[0] = node;
 		queue->tail = queue->tail + 1;
@@ -291,6 +280,7 @@ queue* iterative_breadth_first(btree* t){
 		
 	enqueue(breadth_queue, root);
 	enqueue(breadth_queue_save, root);
+	
 	while (breadth_queue->front != breadth_queue->tail) {
 		node = dequeue(breadth_queue);
 		printf("%d ", node->value);

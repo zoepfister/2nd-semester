@@ -17,6 +17,23 @@ typedef struct btree_node btree_node;
 struct stack;
 typedef struct stack stack;
 
+void push(stack *stack, btree_node* node);
+btree_node* pop(stack *stack);
+void print_stack(stack *stack);
+bool stack_has_next(stack *stack);
+int stack_next(stack *stack);
+stack* iterative_preorder(btree* t);
+
+struct queue;
+typedef struct queue queue;
+
+btree_node* dequeue(queue* queue);
+void enqueue(queue *queue, btree_node *node);
+void print_queue(queue* queue);
+queue* iterative_breadth_first(btree* t);
+bool queue_has_next(queue *queue);
+int queue_next(queue *queue);
+
 /// Creates and returns a new binary tree
 /// must be deallocated by btree_destroy
 btree* btree_create();
@@ -47,10 +64,7 @@ size_t btree_size(const btree* t);
 /// example 3,4,7 in a balanced tree: ((3), 4, (7)) : 3
 void btree_print(const btree* t, FILE* out);
 
-/// Stack stuff
-stack init_stack();
-void push(stack *stack, btree_node* node);
-btree_node* pop(stack *stack);
-void print_stack(stack *stack);
+
+
 
 #endif // _BTREE_H_GUARD_
