@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class UserInput {
 
 
-    public static int parseStringToInt() {
+    private static int parseStringToInt() {
         // Bool to check if we got though try
         boolean success = false;
 
