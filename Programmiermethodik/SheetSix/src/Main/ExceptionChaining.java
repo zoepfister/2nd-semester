@@ -18,13 +18,13 @@ public class ExceptionChaining {
         }
     }
 
-    public static void main(String[] args) throws Ex1, Ex2, Ex3, Ex4, Ex5, Ex6, IllegalArgumentException {
+    public static void main(String[] args) throws Ex1, IllegalArgumentException {
         for (int i = 0; i < 7; i++) {
             try {
                 throwSomething(i);
             } catch (Ex6 ex6) {
                 throw new IllegalArgumentException(ex6);
-            }  catch (Ex4 ex4) {
+            } catch (Ex4 ex4) {
                 System.out.println("Ex1 or Ex4");
             } catch (Ex2 | Ex5 ex25) {
                 System.out.println("Ex2 or Ex5");
@@ -49,7 +49,6 @@ public class ExceptionChaining {
     }
 
     private static class Ex4 extends Ex2 {
-
     }
 
     private static class Ex5 extends Ex3 {

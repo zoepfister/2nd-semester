@@ -6,7 +6,6 @@ public class UserInput {
     private static int parseStringToInt() {
         // Bool to check if we got though try
         boolean success = false;
-
         Scanner scanner = new Scanner(System.in);
 
         do {
