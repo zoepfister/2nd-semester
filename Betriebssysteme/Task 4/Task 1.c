@@ -6,9 +6,10 @@
 #define CHILDREN_AMOUNT 9
 
 int main(int argc, char *argv[]) {
+	
 	// pid of parrent process
-//	pid_t pid = getpid();
-//	int status = 0;
+	//	pid_t pid = getpid();
+	//	int status = 0;
 	
 	// create array of 9 process id's
 	pid_t pids[CHILDREN_AMOUNT];
@@ -23,19 +24,15 @@ int main(int argc, char *argv[]) {
 				abort();
 			} else if (pids[i] == 0) {
 				printf("I am a child: %d with PID: %d\n",i, getpid());
-				exit(0); // forces the child out of the cpu
-			} else {
-				wait(NULL);
-				printf("Child executed\n");
-			}
+				printf("Child will exit now...\n");
+				// forces the child out of the cpu
+				// Very, very important!
+				exit(0); 
+			} 
 		}
-	
 
-//	while (n > 0) {
-//		pid = wait(&status);
-//		printf("Child with PID %ld exited with status 0x%x.\n", (long)pid, status);
-//		n--;
-//	}
-	
+	// wait for all processes to finish if something weird happens
+	// wait removes the child process information from the kernel!
+	wait(NULL);	
 	return EXIT_SUCCESS;
 }

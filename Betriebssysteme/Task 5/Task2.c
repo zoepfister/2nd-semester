@@ -11,7 +11,7 @@ int main(int argc, char * argv[]) {
 	pid_t child_1, child_2;
 	
 	// Create the char_arrays with the arguments
-	char* ls_args[] =  {"ls", "-l", 0}; 
+	char* ls_args[] =  {"ls", "-t", 0}; 
 	char* grep_args[] =  {"grep", argv[1], 0}; 
 				
 	// Create the pipe for future use

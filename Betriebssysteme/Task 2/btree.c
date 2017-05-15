@@ -14,7 +14,7 @@
 
 struct btree {
 	struct btree_node *root;
-	int size;
+	size_t size;
 };
 
 struct btree_node {
@@ -101,8 +101,9 @@ int main(void) {
 	btree_insert(ta, 4);
 	btree_remove(ta, 7);
 	btree_remove(ta, 7);
+	btree_remove(ta, 6);
 
-	assert(btree_size(ta) == 7);
+	assert(btree_size(ta) == 6);
 	assert(btree_contains(ta, 7) == false);
 	btree_print(ta, stdout);
 
@@ -154,14 +155,12 @@ static void print_tree(btree_node* cursor, int max_value, int min_value) {
 	if (cursor != NULL) {
 	// Use fprint, change parameters to take FILE* out as a parameter,
 
-	if (cursor->value == min_value){
-		printf("(");
-	}
 	
 	print_tree(cursor->left, max_value, min_value);
 
 	if (cursor->left == NULL && cursor->right == NULL) {
 		printf("(%d)", cursor->value);
+		// Add recursion here
 	} else if (cursor->left != NULL && cursor->right != NULL) {
 		printf(", %d, ", cursor->value);
 	} else if (cursor->right == NULL) {
@@ -171,10 +170,6 @@ static void print_tree(btree_node* cursor, int max_value, int min_value) {
 	}
 //		printf("%d ", cursor->value);
 	print_tree(cursor->right, max_value, min_value);
-	
-	if (cursor->value == max_value){
-		printf(")");
-	}
 	
 	}
 }

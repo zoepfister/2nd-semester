@@ -39,22 +39,22 @@ void handle_sigalrm(int signal) {
 // Function that uses the alarm function to make a func wait.
 void do_sleep(int seconds){
 	struct sigaction sa;
-		sigset_t mask;
+	sigset_t mask;
 		
-		sa.sa_handler = &handle_sigalrm; // Intercept and ignore SIGALRM
-		sa.sa_flags = SA_RESETHAND; // Remove the handler after first signal
-		sigfillset(&sa.sa_mask);
-		sigaction(SIGALRM, &sa, NULL);
+	sa.sa_handler = &handle_sigalrm; // Intercept and ignore SIGALRM
+	sa.sa_flags = SA_RESETHAND; // Remove the handler after first signal
+	sigfillset(&sa.sa_mask);
+	sigaction(SIGALRM, &sa, NULL);
 		
 		// Get the current signal mask
-		sigprocmask(0, NULL, &mask);
+	sigprocmask(0, NULL, &mask);
 
 		// Unblock SIGALRM
-		sigdelset(&mask, SIGALRM);
+	sigdelset(&mask, SIGALRM);
 
 		// Wait with this mask
-		alarm(seconds);
-		sigsuspend(&mask);
+	alarm(seconds);
+	sigsuspend(&mask);
 }
 
 int main(int argc, char *argv[]) {
@@ -77,6 +77,8 @@ int main(int argc, char *argv[]) {
 	if (child_pid < 0) {
 		printf("Fork error!\n");
 		abort();
+		
+	// Child starts here
 	} else if (child_pid == 0) {
 		
 		pid_t child_pid = getpid();
@@ -98,7 +100,7 @@ int main(int argc, char *argv[]) {
 		//				printf("Cannot handle SIGUSR2!\n");
 		//			}
 		//			printf("Signal recieved!\n");
-		
+	
 	} else {
 		// Parent section
 		sa.sa_handler = SIG_DFL;
