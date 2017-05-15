@@ -15,7 +15,7 @@ public class ErrorTypes {
         // new File("foo bar").createNewFile();
 
         // Actually, no error get's thown but it's an ininite Loop, so
-        // Checked Exception because it is user-defined
+        // Checked Exception because it could be user-defined
         while (true) {
             System.out.println("foo bar");
             break;

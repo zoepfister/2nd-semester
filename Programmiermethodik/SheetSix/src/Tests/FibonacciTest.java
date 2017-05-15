@@ -1,7 +1,5 @@
 import org.testng.annotations.Test;
-
 import static org.testng.AssertJUnit.assertEquals;
-
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
