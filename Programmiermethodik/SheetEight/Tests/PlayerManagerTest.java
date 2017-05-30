@@ -1,6 +1,6 @@
 import org.testng.annotations.Test;
+
 import static org.testng.AssertJUnit.assertEquals;
-import java.util.*;
 
 
 /**
@@ -13,6 +13,7 @@ public class PlayerManagerTest {
         playerManager.players = playerManager.readPlayers();
         playerManager.increaseStrength7();
         for (Player player: playerManager.players) {
+            /* I didn't really know how to assert so many items... */
             if (player.strength >=2 && player.strength <= 4){
                 assertEquals(true, true);
             } else {

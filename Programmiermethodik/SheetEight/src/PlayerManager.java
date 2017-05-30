@@ -1,9 +1,7 @@
-import java.io.CharArrayReader;
-import java.util.ArrayList;
-import java.util.List;
-
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -24,7 +22,6 @@ public class PlayerManager {
             // line to read from it we check by calling the
             // scanner.hasNextLine() method. We then read line one
             // by one till all lines is read.
-
             Scanner scanner = new Scanner(file).useDelimiter("\t");
             while (scanner.hasNextLine()) {
                 Player player = new Player();
@@ -36,7 +33,7 @@ public class PlayerManager {
                 playerArrayList.add(player);
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Could not find specified file! Exiting..");
         }
         return playerArrayList;
     }
@@ -58,7 +55,8 @@ public class PlayerManager {
             System.out.println(player);
         }
     }
-    
+
+    /* Just to test some */
     public static void main(String[] args) {
         PlayerManager playerManager = new PlayerManager();
         playerManager.players = playerManager.readPlayers();
