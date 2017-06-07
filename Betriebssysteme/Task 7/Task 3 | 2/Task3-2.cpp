@@ -13,21 +13,26 @@ using namespace std;
 
 pthread_t id[4];
 pthread_cond_t full = PTHREAD_COND_INITIALIZER;
-pthread_cond_t empty = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t myMutex = PTHREAD_MUTEX_INITIALIZER;
 std::queue<unsigned> producerQueue;
+bool queue_ready = false;
 int i = 0;
 
 void *thread_routine(void *arg){
 	unsigned sum = 0;
 	// How can I make every thread continue after the queue is filled?
-	while (producerQueue.size()<100000) {};
-	pthread_cond_wait(&cond, &myMutex);
+	pthread_mutex_lock(&myMutex);
+	if (queue_ready == false) {
+		pthread_cond_wait(&full, &myMutex);
+	}
+	
 	while (true) {
 		if (producerQueue.front() != 0) {
 			sum += producerQueue.front();
 			producerQueue.pop();
+			pthread_mutex_unlock(&myMutex);
 		} else {
+		pthread_mutex_unlock(&myMutex);
 		break;
 		}
 	}
@@ -41,12 +46,17 @@ int main(int argc, char *argv[]) {
 		pthread_create(&id[i], NULL, &thread_routine, NULL);
 	}
 	
+	
 	for (int i = 0; i < 100000;i++) {
+
 		producerQueue.push(1);
 	}
 	for (int i = 0;i < 4;i++) {
 		producerQueue.push(0);
 	}
+	
+	queue_ready = true;
+	pthread_cond_broadcast(&full);
 	
 //	printf("%lu", producerQueue.size());
 	
@@ -54,8 +64,9 @@ int main(int argc, char *argv[]) {
 		pthread_join(id[i], NULL);
 	}
 	
+	pthread_cond_destroy(&full);	
 	pthread_mutex_destroy(&myMutex);
-	pthread_cond_destroy(&cond);
+
 	
 	return EXIT_SUCCESS;
 }
