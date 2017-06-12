@@ -3,7 +3,7 @@
  */
 public class PlayerOptions {
 
-    public enum choices {rock, paper, scissors};
+    public enum choices {rock, paper, scissors, lizard, spock};
     public enum result {player1, player2, draw};
 
 }

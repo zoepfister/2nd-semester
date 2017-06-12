@@ -54,9 +54,11 @@ public class Game extends PlayerOptions{
 			return result.draw;
 		}
 		switch (player1Choice){
-			case paper: return player2Choice == choices.rock ? result.player1 : result.player2;
-			case rock: return player2Choice == choices.scissors ? result.player1 : result.player2;
-			case scissors: return player2Choice == choices.paper ? result.player1 : result.player2;
+			case paper: return player2Choice == choices.rock ? result.player1 : player2Choice == choices.spock ? result.player1 : result.player2;
+			case rock: return player2Choice == choices.scissors ? result.player1 : player2Choice == choices.lizard ? result.player1 : result.player2;
+			case scissors: return player2Choice == choices.paper ? result.player1 : player2Choice == choices.lizard ? result.player1 : result.player2;
+			case lizard: return player2Choice == choices.paper ? result.player1 : player2Choice == choices.spock ? result.player1 : result.player2;
+			case spock: return player2Choice == choices.scissors ? result.player1 : player2Choice == choices.rock ? result.player1 : result.player2;
 		}
 		return null;
 	}

@@ -9,10 +9,6 @@ public class Player extends PlayerOptions {
     int loses = 0;
     int draw = 0;
 
-    /**
-     * Randomly choose rock, paper, or scissors
-     */
-
     Player() {
         super();
         playerInputScanner = new Scanner(System.in);
@@ -26,7 +22,7 @@ public class Player extends PlayerOptions {
 
     public choices getChoise() {
         clearScreen();
-        System.out.println(this.name + ": enter your choise: R=Rock, P=Paper, S=Scissors");
+        System.out.println(this.name + ": enter your choise: R=Rock, P=Paper, S=Scissors, L=Lizard, C or K=Spock");
         switch (playerInputScanner.nextLine().toUpperCase().charAt(0)) {
             case 'R':
                 return choices.rock;
@@ -34,6 +30,11 @@ public class Player extends PlayerOptions {
                 return choices.paper;
             case 'S':
                 return choices.scissors;
+            case 'L':
+                return choices.lizard;
+            case 'C':
+            case 'K':
+                return choices.spock;
         }
         System.out.println("Invalid input!");
         return getChoise();
