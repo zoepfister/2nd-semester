@@ -12,7 +12,7 @@ public class Mandelbrot {
 						break;
 					}
 				}
-				if (a > 2) {
+				if (complexNumber.abs() > 2) {
 					System.out.print(" ");
 				} else {
 					System.out.print("\u25a0");
